@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Revision Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .quiz-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 700px;
+        }
+
+        .quiz-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .question-section {
+            margin-bottom: 25px;
+        }
+
+        .question-div {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 12px;
+        }
+
+        .options-list label {
+            display: block;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            user-select: none;
+        }
+
+        .options-list label:hover {
+            background-color: #e0e0e0;
+        }
+
+        .options-list input[type="radio"] {
+            margin-right: 10px;
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .options-list input[type="radio"]:checked+label {
+            background-color: #cce5ff;
+        }
+
+        .submit-btn {
+            display: block;
+            padding: 12px 25px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin: 20px auto;
+        }
+
+        .submit-btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #progress-container {
+            width: 100%;
+            background-color: #ddd; /* Light grey background */
+            border-radius: 5px;
+            height: 10px;
+            margin-bottom: 20px; /* Added margin */
+          }
+
+      #progress-bar {
+        height: 100%;
+        background-color: #007bff; /* Blue progress bar color */
+        width: 0;
+        border-radius: 5px;
+        transition: width 0.3s ease;
+          }
+
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h1>English Revision Quiz</h1>
+         <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="quiz">
+        <div class="question-section" data-section="1">
+                <!-- Questions 1-10 will be loaded here -->
+            </div>
+           <div class="question-section" data-section="2" style="display: none;">
+                <!-- Questions 11-20 will be loaded here -->
+            </div>
+           <div class="question-section" data-section="3" style="display: none;">
+                <!-- Questions 21-30 will be loaded here -->
+            </div>
+             <div class="question-section" data-section="4" style="display: none;">
+                <!-- Questions 31-40 will be loaded here -->
+            </div>
+            <div class="question-section" data-section="5" style="display: none;">
+                <!-- Questions 41-50 will be loaded here -->
+            </div>
+             <div class="question-section" data-section="6" style="display: none;">
+                <!-- Questions 51-60 will be loaded here -->
+            </div>
+             <div class="question-section" data-section="7" style="display: none;">
+                <!-- Questions 61-70 will be loaded here -->
+            </div>
+            <div class="question-section" data-section="8" style="display: none;">
+                <!-- Questions 71-80 will be loaded here -->
+            </div>
+        </div>
+    </div>
+    <script>
+        const quizContainer = document.querySelector('#quiz');
+        const progressBar = document.getElementById('progress-bar');
+         const questions = [
+          {
+                question: "Which of the following IT jobs involves writing code using programming languages?",
+             options: ["Network Administrator", "Software Developer/Engineer", "IT Support Specialist", "Database Administrator"],
+               correctAnswer: "Software Developer/Engineer"
+           },
+           {
+             question: "Which of these is a front-end technology used in web development?",
+             options: ["Python", "Java", "JavaScript", "SQL"],
+                correctAnswer: "JavaScript"
+            },
+            {
+              question: "What is a key responsibility of a Network Administrator?",
+             options: ["Designing websites", "Managing user accounts and firewalls", "Developing mobile applications", "Managing databases"],
+                correctAnswer: "Managing user accounts and firewalls"
+           },
+            {
+                question: "What is the primary role of a System Administrator?",
+               options: ["Creating graphics", "Managing servers and IT infrastructure", "Writing software code", "Testing applications"],
+              correctAnswer: "Managing servers and IT infrastructure"
+           },
+          {
+                question: "What does an IT Support Specialist (Help Desk Technician) primarily do?",
+                 options: ["Managing cloud servers", "Providing technical support to users", "Designing complex networks", "Developing AI algorithms"],
+                correctAnswer: "Providing technical support to users"
+           },
+          {
+              question: "A Database Administrator (DBA) is responsible for:",
+             options: ["Developing test cases", "Optimizing database performance", "Analyzing business processes", "Designing network architecture"],
+                correctAnswer: "Optimizing database performance"
+          },
+           {
+            question: "A Cybersecurity Analyst primarily focuses on:",
+           options: ["Managing IT projects", "Protecting systems from cyber threats", "Developing training materials", "Optimizing database queries"],
+             correctAnswer: "Protecting systems from cyber threats"
+           },
+         {
+            question: "Which IT professional designs and manages cloud infrastructure?",
+             options: ["DevOps Engineer", "Cloud Engineer", "Machine Learning Engineer", "Network Architect"],
+               correctAnswer: "Cloud Engineer"
+          },
+           {
+             question: "Which of the following roles uses tools like Excel, SQL, and Python?",
+              options: ["Business Analyst", "Tester Engineer", "Data Analyst", "Network Architect"],
+              correctAnswer: "Data Analyst"
+          },
+           {
+            question: "A Machine Learning Engineer is responsible for developing:",
+             options: ["Network security systems", "AI models and algorithms", "Mobile applications", "Web interfaces"],
+                correctAnswer: "AI models and algorithms"
+           },
+          {
+            question: "Which job acts as a bridge between IT teams and business stakeholders?",
+             options: ["DevOps Engineer", "IT Project Manager", "Business Analyst", "Cloud Engineer"],
+              correctAnswer: "Business Analyst"
+            },
+           {
+             question: "Which role designs and plans complex network infrastructures?",
+             options: ["IT Support Specialist", "Network Architect", "System Administrator", "Software Developer"],
+               correctAnswer: "Network Architect"
+          },
+           {
+                question: "A DevOps Engineer's key goal is to automate:",
+               options: ["User interfaces", "Software development and IT operations", "Database backups", "Cloud migrations"],
+             correctAnswer: "Software development and IT operations"
+          },
+            {
+              question: "A Tester Engineer is mainly responsible for:",
+                options: ["Testing software for bugs", "Managing project budgets", "Analyzing business requirements", "Designing server layouts"],
+               correctAnswer: "Testing software for bugs"
+           },
+           {
+             question: "What does an IT Project Manager oversee?",
+             options: ["Developing AI models", "Testing hardware", "Planning and overseeing IT projects", "Managing social media accounts"],
+               correctAnswer: "Planning and overseeing IT projects"
+           },
+         {
+             question: "What does 'IT' stand for?",
+            options: ["Internet Technology", "Information Technology", "Integrated Technology", "International Transfer"],
+            correctAnswer: "Information Technology"
+           },
+         {
+               question: "What does 'HDD' stand for?",
+              options: ["High Data Drive", "Hard Disk Drive", "Hybrid Data Device", "Hyper Disk Drive"],
+              correctAnswer: "Hard Disk Drive"
+          },
+           {
+               question: "What is the function of the PSU (Power Supply Unit) in a computer?",
+             options: ["Store data permanently", "Convert AC power to DC power", "Process all calculations", "Display computer output"],
+             correctAnswer: "Convert AC power to DC power"
+            },
+            {
+                question: "Which component is considered the 'brain' of the computer?",
+               options: ["GPU", "RAM", "CPU", "Motherboard"],
+              correctAnswer: "CPU"
+          },
+           {
+              question: "What is the purpose of the BIOS (Basic Input/Output System)?",
+               options: ["Manage user profiles", "Initialize hardware", "Store user data", "Control network traffic"],
+              correctAnswer: "Initialize hardware"
+         },
+           {
+              question: "Which network connects devices within a small area, like an office?",
+                options: ["WAN", "LAN", "VPN", "MAN"],
+                correctAnswer: "LAN"
+          },
+        {
+                question: "Which type of network connects LANs over large distances?",
+               options: ["PAN", "SAN", "WAN", "CAN"],
+             correctAnswer: "WAN"
+          },
+       {
+                question: "What type of devices allow users to interact with the computer?",
+                options: ["Storage devices", "Input devices", "Output devices", "Processing units"],
+                correctAnswer: "Input devices"
+            },
+            {
+               question: "Which of the following is an example of output device?",
+                options: ["Keyboard", "Mouse", "Monitor", "Scanner"],
+                correctAnswer: "Monitor"
+            },
+            {
+             question: "Which part handles data processing?",
+              options: ["CPU", "GPU", "RAM", "HDD"],
+                correctAnswer: "CPU"
+            },
+           {
+               question: "What does 'GPU' stand for?",
+              options: ["General Processing Unit", "Graphic Processing Unit", "Global Processing Unit", "Giant Processing Unit"],
+                correctAnswer: "Graphic Processing Unit"
+           },
+          {
+              question: "What is the purpose of RAM in a computer?",
+             options: ["Permanent data storage", "Temporary data storage", "Managing system settings", "Processing network protocols"],
+              correctAnswer: "Temporary data storage"
+         },
+          {
+                question: "Which component connects all other parts of a PC?",
+                options: ["CPU", "Motherboard", "RAM", "PSU"],
+                correctAnswer: "Motherboard"
+            },
+        {
+             question: "Which component provides power to all other components?",
+              options: ["CPU", "GPU", "Motherboard", "PSU"],
+             correctAnswer: "PSU"
+          },
+        {
+            question: "What is the main purpose of a cooling system in a PC?",
+                options: ["To enhance graphics", "To prevent overheating", "To provide additional memory", "To control power usage"],
+                correctAnswer: "To prevent overheating"
+          },
+        {
+                question: "Which type of website provides information about an idea or cause?",
+                 options: ["Commercial Websites", "Personal Websites", "Organizational Websites", "Entertainment Websites"],
+                  correctAnswer: "Organizational Websites"
+             },
+           {
+                 question: "Which type of websites typically sell products or services online?",
+                 options: ["Commercial Websites", "Educational Websites", "News Websites", "Personal Websites"],
+                  correctAnswer: "Commercial Websites"
+             },
+            {
+                 question: "Which type of websites focuses on providing fun activities and streaming content?",
+                  options: ["News Websites", "Social Networking Websites", "Entertainment Websites", "Educational Websites"],
+                   correctAnswer: "Entertainment Websites"
+             },
+            {
+             question: "Which type of websites are primarily for providing current events and news?",
+                  options: ["Organizational Websites", "News Websites", "Commercial Websites", "Personal Websites"],
+                   correctAnswer: "News Websites"
+            },
+            {
+                question: "What type of website includes personal blogs and portfolios?",
+                  options: ["Social Networking Websites", "Personal Websites", "Educational Websites", "Organizational Websites"],
+                  correctAnswer: "Personal Websites"
+             },
+            {
+                 question: "Which type of websites facilitates connecting and communicating with other people?",
+                  options: ["Entertainment Websites", "Social Networking Websites", "News Websites", "Commercial Websites"],
+                   correctAnswer: "Social Networking Websites"
+            },
+            {
+                  question: "Which type of websites is created to share knowledge and support online learning?",
+                   options: ["Commercial Websites", "Educational Websites", "Personal Websites", "Organizational Websites"],
+                 correctAnswer: "Educational Websites"
+            },
+            {
+                  question: "What is a synonym for 'Happy'?",
+                  options: ["Sad", "Miserable", "Joyful", "Unhappy"],
+                   correctAnswer: "Joyful"
+              },
+             {
+               question: "What is a synonym for 'Sad'?",
+                 options: ["Cheerful", "Elated", "Content", "Sorrowful"],
+                correctAnswer: "Sorrowful"
+           },
+        {
+                question: "What is a synonym for 'Fast'?",
+                options: ["Gradual", "Sluggish", "Quick", "Leisurely"],
+                correctAnswer: "Quick"
+        },
+          {
+                question: "What is a synonym for 'Slow'?",
+                options: ["Swift", "Speedy", "Deliberate", "Rapid"],
+                 correctAnswer: "Deliberate"
+          },
+           {
+               question: "What is a synonym for 'Big'?",
+               options: ["Tiny", "Minute", "Enormous", "Compact"],
+                correctAnswer: "Enormous"
+            },
+             {
+                question: "What is a synonym for 'Small'?",
+                options: ["Large", "Huge", "Massive", "Tiny"],
+                correctAnswer: "Tiny"
+           },
+         {
+                question: "What is a synonym for 'Beautiful'?",
+                options: ["Unattractive", "Plain", "Gorgeous", "Displeasing"],
+                 correctAnswer: "Gorgeous"
+          },
+        {
+                 question: "What is a synonym for 'Ugly'?",
+                 options: ["Lovely", "Stunning", "Unappealing", "Attractive"],
+                 correctAnswer: "Unappealing"
+          },
+          {
+                question: "What is a synonym for 'Strong'?",
+                 options: ["Frail", "Feeble", "Powerful", "Delicate"],
+                correctAnswer: "Powerful"
+        },
+         {
+                question: "What is a synonym for 'Weak'?",
+                options: ["Sturdy", "Robust", "Resilient", "Frail"],
+              correctAnswer: "Frail"
+          },
+        {
+               question: "What is a synonym for 'Smart'?",
+               options: ["Stupid", "Dull", "Intelligent", "Foolish"],
+              correctAnswer: "Intelligent"
+         },
+       {
+               question: "What is a synonym for 'Dumb'?",
+               options: ["Clever", "Bright", "Sharp", "Foolish"],
+                 correctAnswer: "Foolish"
+           },
+       {
+                 question: "What is a synonym for 'Rich'?",
+                  options: ["Destitute", "Needy", "Affluent", "Penniless"],
+                  correctAnswer: "Affluent"
+           },
+       {
+                question: "What is a synonym for 'Poor'?",
+                options: ["Wealthy", "Opulent", "Prosperous", "Impoverished"],
+                correctAnswer: "Impoverished"
+           },
+       {
+                 question: "What is a synonym for 'Brave'?",
+                  options: ["Timid", "Fearful", "Daring", "Spineless"],
+                correctAnswer: "Daring"
+         },
+        {
+            question: "What is a synonym for 'Cowardly'?",
+              options: ["Courageous", "Fearless", "Timid", "Bold"],
+              correctAnswer: "Timid"
+           },
+       {
+              question: "What is a synonym for 'Clean'?",
+               options: ["Filthy", "Grimey", "Neat", "Messy"],
+              correctAnswer: "Neat"
+          },
+      {
+             question: "What is a synonym for 'Dirty'?",
+             options: ["Spotless", "Pristine", "Filthy", "Tidy"],
+                correctAnswer: "Filthy"
+           },
+          {
+              question: "What is the opposite of 'Happy'?",
+              options: ["Joyful", "Elated", "Content", "Sad"],
+               correctAnswer: "Sad"
+          },
+            {
+                 question: "What is the opposite of 'Big'?",
+                 options: ["Large", "Huge", "Enormous", "Small"],
+                 correctAnswer: "Small"
+            },
+            {
+                 question: "What is the opposite of 'Fast'?",
+                 options: ["Rapid", "Swift", "Speedy", "Slow"],
+                   correctAnswer: "Slow"
+           },
+           {
+                 question: "What is the opposite of 'Strong'?",
+                 options: ["Sturdy", "Powerful", "Robust", "Weak"],
+                 correctAnswer: "Weak"
+           },
+          {
+                 question: "What is the opposite of 'Tall'?",
+                  options: ["Large", "Huge", "Short", "Enormous"],
+                  correctAnswer: "Short"
+           },
+           {
+                question: "What is the opposite of 'Clean'?",
+                  options: ["Spotless", "Pristine", "Tidy", "Dirty"],
+                    correctAnswer: "Dirty"
+            },
+            {
+                 question: "What is the opposite of 'Beautiful'?",
+                 options: ["Gorgeous", "Stunning", "Lovely", "Ugly"],
+                   correctAnswer: "Ugly"
+           },
+          {
+                 question: "What is the opposite of 'Young'?",
+                  options: ["New", "Fresh", "Old", "Recent"],
+                  correctAnswer: "Old"
+            },
+          {
+                question: "What is the opposite of 'Above'?",
+                 options: ["Top", "Up", "Below", "Over"],
+                   correctAnswer: "Below"
+            },
+          {
+                  question: "What is the opposite of 'Generous'?",
+                    options: ["Kind", "Selfish", "Stingy", "Giving"],
+                    correctAnswer: "Stingy"
+            },
+         {
+                  question: "What is the opposite of 'Dry'?",
+                  options: ["Humid", "Arid", "Wet", "Parched"],
+                   correctAnswer: "Wet"
+           },
+         {
+                 question: "What is the opposite of 'Expensive'?",
+                 options: ["Pricy", "Costly", "Cheap", "Valuable"],
+                   correctAnswer: "Cheap"
+            },
+         {
+               question: "What is the opposite of 'Safe'?",
+                  options: ["Secure", "Protected", "Dangerous", "Harmless"],
+                 correctAnswer: "Dangerous"
+           },
+           {
+                  question: "What is the opposite of 'Light'?",
+                 options: ["Dark", "Bright", "Radiant", "Pale"],
+                   correctAnswer: "Dark"
+           },
+           {
+                  question: "What is the opposite of 'Full'?",
+                 options: ["Complete", "Abundant", "Empty", "Packed"],
+                    correctAnswer: "Empty"
+             },
+           {
+                   question: "What is the opposite of 'Near'?",
+                   options: ["Close", "Adjacent", "Far", "Neighboring"],
+                     correctAnswer: "Far"
+             },
+           {
+                   question: "What is the opposite of 'Hard'?",
+                     options: ["Tough", "Stiff", "Soft", "Rigid"],
+                     correctAnswer: "Soft"
+             },
+           {
+                 question: "What is the opposite of 'Old'?",
+                  options: ["New", "Aged", "Elderly", "Antique"],
+                    correctAnswer: "New"
+            },
+          {
+                 question: "What is the opposite of 'Loud'?",
+                 options: ["Noisy", "Blaring", "Quiet", "Deafening"],
+                   correctAnswer: "Quiet"
+             },
+        {
+                  question: "What is the opposite of 'True'?",
+                   options: ["Real", "Genuine", "Valid", "False"],
+                     correctAnswer: "False"
+          },
+         {
+              question: "What is the opposite of 'Sweet'?",
+               options: ["Sugary", "Sour", "Honeyed", "Syrupy"],
+              correctAnswer: "Sour"
+          },
+         {
+                  question: "What is the opposite of 'Clean'?",
+                    options: ["Tidy", "Spotless", "Messy", "Pristine"],
+                    correctAnswer: "Messy"
+            },
+           {
+                question: "What is the opposite of 'Strong'?",
+                 options: ["Mighty", "Tough", "Vigorous", "Fragile"],
+                 correctAnswer: "Fragile"
+           },
+           {
+                 question: "What is the opposite of 'Open'?",
+                   options: ["Unclosed", "Unlocked", "Closed", "Accessible"],
+                     correctAnswer: "Closed"
+            },
+          {
+              question: "What is the opposite of 'Hardworking'?",
+                options: ["Diligent", "Industrious", "Lazy", "Energetic"],
+                correctAnswer: "Lazy"
+         },
+          {
+               question: "What is the opposite of 'Friendly'?",
+               options: ["Warm", "Hostile", "Cordial", "Affable"],
+                correctAnswer: "Hostile"
+           },
+            {
+                  question: "Choose the correct prefix for 'happy':",
+                  options: ["re-", "un-", "pre-", "dis-"],
+                  correctAnswer: "un-"
+            },
+         {
+               question: "Choose the correct prefix for 'view':",
+              options: ["re-", "un-", "pre-", "dis-"],
+               correctAnswer: "pre-"
+          },
+         {
+              question: "Choose the correct prefix for 'like':",
+               options: ["re-", "un-", "pre-", "dis-"],
+              correctAnswer: "dis-"
+         },
+       {
+            question: "Choose the correct prefix for 'play':",
+             options: ["re-", "un-", "pre-", "dis-"],
+            correctAnswer: "re-"
+      },
+       {
+                  question: "Choose the correct prefix for 'correct':",
+                   options: ["re-", "un-", "pre-", "in-"],
+                    correctAnswer: "in-"
+            },
+         {
+                 question: "Which suffix indicates 'full of'?",
+                   options: ["-ly", "-ful", "-ness", "-able"],
+                    correctAnswer: "-ful"
+          },
+       {
+            question: "Which suffix indicates a 'state or quality of being'?",
+            options: ["-ly", "-ful", "-ness", "-able"],
+              correctAnswer: "-ness"
+         },
+          {
+              question: "Which suffix is used to form an adverb?",
+                options: ["-ly", "-ful", "-ness", "-able"],
+                correctAnswer: "-ly"
+         },
+          {
+            question: "Which suffix indicates something that 'can be done'?",
+            options: ["-ly", "-ful", "-ness", "-able"],
+             correctAnswer: "-able"
+        },
+          {
+           question: "Which suffix indicates 'state or result of'?",
+           options: ["-ment", "-ful", "-ness", "-able"],
+               correctAnswer: "-ment"
+          },
+             {
+          question: "Which prefix indicates the opposite of a word?",
+              options: ["un-","re-","pre-","trans-"],
+                correctAnswer: "un-"
+          },
+           {
+          question: "Which prefix indicates 'again'?",
+               options: ["un-","re-","pre-","trans-"],
+                correctAnswer: "re-"
+          },
+          {
+          question: "Which prefix indicates 'before'?",
+             options: ["un-","re-","pre-","trans-"],
+                correctAnswer: "pre-"
+           },
+            {
+          question: "Which prefix means 'across' or 'beyond'?",
+              options: ["un-","re-","pre-","trans-"],
+                correctAnswer: "trans-"
+           },
+           {
+              question: "Which prefix means 'between' or 'among'?",
+                 options: ["un-","over-","inter-","under-"],
+                  correctAnswer: "inter-"
+           },
+          {
+            question: "Which prefix means 'too much or above'?",
+            options: ["un-","over-","inter-","under-"],
+              correctAnswer: "over-"
+        },
+          {
+            question: "Which prefix means 'too little or below'?",
+            options: ["un-","over-","inter-","under-"],
+              correctAnswer: "under-"
+        },
+        {
+              question: "Which suffix indicates 'a person who does something'?",
+                options: ["-ist","-er","-able","-ly"],
+                  correctAnswer: "-er"
+           },
+      {
+              question: "Which suffix indicates 'ongoing action or a form of a verb'?",
+              options: ["-ist","-ing","-able","-ly"],
+                correctAnswer: "-ing"
+       },
+     {
+              question: "Which suffix indicates 'a person who specializes in something'?",
+                options: ["-ist","-er","-able","-ly"],
+                 correctAnswer: "-ist"
+      }
+        ];
+
+
+          function loadQuestions() {
+             let sectionHTML = '';
+
+            for (let sectionNumber = 1; sectionNumber <= 8; sectionNumber++) {
+             const start = (sectionNumber -1)*10;
+             const end = start + 10;
+
+             const questionsSubset = questions.slice(start,end);
+             sectionHTML = `<p class="result" data-result-section='${sectionNumber}' style="display:none;"></p>`;
+           questionsSubset.forEach((question, index) => {
+                    sectionHTML += `
+                        <div class="question-div">
+                            <p><strong>${start + index + 1}. ${question.question}</strong></p>
+                            <ul class="options-list">
+                               ${question.options.map(option => `
+                                   <li>
+                                       <input type="radio" name="question-${start + index}" id="option-${start + index}-${option.replace(/[^a-zA-Z0-9]/g, '')}" value="${option}">
+                                       <label for="option-${start + index}-${option.replace(/[^a-zA-Z0-9]/g, '')}">${option}</label>
+                                   </li>
+                               `).join('')}
+                            </ul>
+                        </div>
+                    `;
+
+              });
+
+                sectionHTML += `<button class="submit-btn" onclick="calculateResult(${sectionNumber})">Submit Section ${sectionNumber}</button>`;
+                 document.querySelector(`[data-section="${sectionNumber}"]`).innerHTML = sectionHTML;
+
+              if(sectionNumber>1) {
+                document.querySelector(`[data-section="${sectionNumber}"]`).style.display = "none";
+              }
+            }
+
+
+         }
+
+
+         function calculateResult(sectionNumber) {
+            let score = 0;
+              const start = (sectionNumber -1)*10;
+             const end = start + 10;
+              const questionsSubset = questions.slice(start,end);
+          questionsSubset.forEach((question, index) => {
+                const selectedOption = document.querySelector(`input[name="question-${start + index}"]:checked`);
+                if (selectedOption && selectedOption.value === question.correctAnswer) {
+                    score++;
+                }
+            });
+
+           const resultSection = document.querySelector(`[data-result-section="${sectionNumber}"]`);
+            resultSection.innerHTML = `Your score for this section is: ${score} out of ${questionsSubset.length}`;
+           resultSection.style.display = "block";
+
+
+          const nextSection = sectionNumber+1;
+           if(nextSection <=8) {
+            const nextSectionElement =   document.querySelector(`[data-section="${nextSection}"]`);
+            nextSectionElement.style.display = "block";
+           }
+
+             updateProgress(sectionNumber);
+        }
+
+
+         function updateProgress(sectionNumber) {
+          const completedSections = sectionNumber;
+            const progress = (completedSections/ 8)*100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        window.onload = ()=>{
+          loadQuestions();
+        }
+    </script>
+</body>
+</html>
